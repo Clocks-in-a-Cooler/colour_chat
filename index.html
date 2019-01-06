@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chat Server</title>
+    
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Oxygen|Oxygen+Mono" rel="stylesheet"> 
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <div id="main_panel">
+        <div id="messages"></div>
+        <form action="">
+            <div id="name"><input type="text" placeholder="your name"></div>
+            <div id="message"><input type="text" placeholder="send a message..."></div>
+        </form>
+    </div>
+    
+    <script>
+    
+        //identify the various parts of the page
+        var main_panel     = document.getElementById("main_panel");
+        var messages_panel = document.getElementById("messages");
+        var name_input     = document.getElementById("name");
+        var message_input  = document.getElementById("message");
+        var form           = document.querySelector("form");
+        
+    </script>
+    
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+    
+    <script>
+        //kick start everything
+        init();
+    </script>
+</body>
+</html>
