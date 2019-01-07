@@ -88,6 +88,12 @@ socket.on("chat message", function(msg) {
     messages_panel.appendChild(document.createElement("br"));
 });
 
+socket.on("notification", function(notif) {
+    messages_panel.appendChild(create_element("message", notif, "background-color: darkslategray; color: white;"));
+    messages_panel.scrollTo(0, messages_panel.scrollHeight);
+    messages_panel.appendChild(document.createElement("br"));
+});
+
 function create_element(type, content, style) {
     var elt         = document.createElement("div");
     var class_att   = document.createAttribute("class");

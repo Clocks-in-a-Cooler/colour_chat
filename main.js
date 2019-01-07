@@ -19,7 +19,7 @@ app.use(express.static(__dirname));
 
 io.on('connection', function(socket){
     //notify everyone
-    io.emit('chat message', "somebody has entered this chatroom.");
+    io.emit('notification', "somebody has entered this chatroom.");
 
     socket.on('chat message', function(msg){
     //processing
