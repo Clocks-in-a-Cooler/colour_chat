@@ -17,13 +17,17 @@ app.get('/', function(req, res){
 //so that the resources can be loaded.
 app.use(express.static(__dirname));
 
-io.on('connection', function(socket){
+io.on('connection', function(socket) {
+    //give the new person their colour
+    io.emit('colour', get_colour());
+
     //notify everyone
     io.emit('notification', "somebody has entered this chatroom.");
 
     socket.on('chat message', function(msg){
     //processing
-    log("[message] " + msg);
+    var message = JSON.parse(msg).content;
+    log("[message] " + message);
     io.emit('chat message', msg);
   });
 });
@@ -69,5 +73,40 @@ function get_date_time() {
     day = (day < 10 ? "0" : "") + day;
 
     return year + "/" + month + "/" + day + " " + hour + ":" + min + ":" + sec;
+}
 
+/*------------------------------------------------------------------------------------------*/
+//the colour part of this
+//colours for the chat box
+var chat_colours = {
+    "mediumvioletred": true,
+    "crimson": true,
+    "orangered": true,
+    "darkorange": true,
+    "gold": true,
+    "darkkhaki": true,
+    "sienna": true,
+    "chocolate": true,
+    "limegreen": true,
+    "forestgreen": true,
+    "lightseagreen": true,
+    "steelblue": true,
+    "royalblue": true,
+    "plum": true,
+    "orchid": true,
+    "darkslateblue": true,
+};
+
+function get_colour() {
+    var colours = Object.getOwnPropertyNames(chat_colours).filter(function(c) {return chat_colours[c]});
+    
+    if (colours.length == 0) {
+        colours = Object.getOwnPropertyNames(chat_colours);
+    }
+    
+    var colour = colours[Math.floor(Math.random() * colours.length)];
+    
+    log("[notification] colour chosen: " + colour);
+    
+    return colour;
 }

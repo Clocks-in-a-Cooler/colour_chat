@@ -1,27 +1,3 @@
-//colours for the chat box
-var colours = [
-    "mediumvioletred",
-    "crimson",
-    "orangered",
-    "darkorange",
-    "gold",
-    "darkkhaki",
-    "sienna",
-    "chocolate",
-    "limegreen",
-    "forestgreen",
-    "lightseagreen",
-    "steelblue",
-    "royalblue",
-    "plum",
-    "orchid",
-    "darkslateblue"
-];
-
-function random_colour() {
-    return colours[Math.floor(Math.random() * colours.length)];
-}
-
 //i am *not* messing with jquery
 function position_elements() {
     //main panel first
@@ -48,6 +24,7 @@ function init() {
     position_elements();
 }
 
+var colour = null;
 var socket = io();
 
 console.log("adding event listeners...");
@@ -69,7 +46,10 @@ form.submit = function(event) {
         return;
     }
     
-    socket.emit("chat message", user + ": " + message);
+    socket.emit("chat message", JSON.stringify({
+        content: user + ": " + message,
+        colour: colour,
+    }));
     
     message_input.childNodes[0].value = "";
     
@@ -83,7 +63,9 @@ addEventListener("keypress", function(e) {
 });
 
 socket.on("chat message", function(msg) {
-    messages_panel.appendChild(create_element("message", msg, null));
+    var msg_content = JSON.parse(msg).content;
+    var msg_colour  = JSON.parse(msg).colour;
+    messages_panel.appendChild(create_element("message", msg_content, "background-color: " + msg_colour + "; color: white;"));
     messages_panel.scrollTo(0, messages_panel.scrollHeight);
     messages_panel.appendChild(document.createElement("br"));
 });
@@ -92,6 +74,14 @@ socket.on("notification", function(notif) {
     messages_panel.appendChild(create_element("message", notif, "background-color: darkslategray; color: white;"));
     messages_panel.scrollTo(0, messages_panel.scrollHeight);
     messages_panel.appendChild(document.createElement("br"));
+});
+
+socket.on("colour", function(c) {
+    if (colour == null) {
+        colour = c;
+        console.log("colour set to :" + c);
+    }
+    //ignore otherwise
 });
 
 function create_element(type, content, style) {
