@@ -46,6 +46,7 @@ body {
     padding: 5px;
     float: left;
     width: 70%;
+    border-radius: 5px;
 }
 
 form {

@@ -8,27 +8,36 @@
     <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+    <div id="login_panel">
+        <form action="" id="login_form">
+            <input type="text" placeholder="name..." id="name" />
+            <!-- <input type="text" placeholder="authentication key..." id="authentication" /> -->
+        </form>
+    </div>
+    
     <div id="main_panel">
         <div id="messages"></div>
-        <form action="">
-            <div id="name"><input type="text" placeholder="your name"></div>
-            <div id="message"><input type="text" placeholder="send a message..."></div>
+        <form action="" id="message_form">
+            <input type="text" placeholder="send a message..." id="message" />
         </form>
     </div>
     
     <script>
     
         //identify the various parts of the page
+        var login_panel = document.getElementById("login_panel");
+        var name_input  = document.getElementById("name");
+        var login_form  = document.getElementById("login_form");
+        
         var main_panel     = document.getElementById("main_panel");
         var messages_panel = document.getElementById("messages");
-        var name_input     = document.getElementById("name");
         var message_input  = document.getElementById("message");
-        var form           = document.querySelector("form");
+        var message_form   = document.getElementById("message_form");
         
     </script>
     
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-    <script type="text/javascript" src="script.js"></script>
+    <script src="script.js"></script>
     
     <script>
         //kick start everything

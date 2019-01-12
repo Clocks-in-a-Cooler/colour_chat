@@ -25,17 +25,18 @@ io.on('connection', function(socket) {
     io.emit('notification', "somebody has entered this chatroom.");
 
     socket.on('chat message', function(msg){
-    //processing
-    var message = JSON.parse(msg).content;
-    log("[message] " + message);
-    io.emit('chat message', msg);
-  });
+        //processing
+        var message = JSON.parse(msg).content;
+        log("[message] " + message);
+        io.emit('chat message', msg);
+    });
+    
+    socket.on('disconnect', function() {
+        log("[notification] somebody has disconnected.");
+        io.emit('chat message', "somebody has disconnected.");
+    });
 });
 
-io.on('disconnect', function() {
-    log("[notification] somebody has disconnected.");
-    io.emit('chat message', "somebody has disconnected.");
-});
 
 http.listen(port, function(){
     console.log('listening on *:' + port);
@@ -107,6 +108,8 @@ function get_colour() {
     var colour = colours[Math.floor(Math.random() * colours.length)];
     
     log("[notification] colour chosen: " + colour);
+    
+    chat_colours[colour] = false;
     
     return colour;
 }

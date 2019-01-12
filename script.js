@@ -79,7 +79,12 @@ socket.on("notification", function(notif) {
 socket.on("colour", function(c) {
     if (colour == null) {
         colour = c;
-        console.log("colour set to :" + c);
+        console.log("colour set to: " + c);
+        
+        main_panel.style.borderColor = c;
+        
+        message_input.childNodes[0].style.borderColor = c;
+        name_input.childNodes[0].style.borderColor    = c;
     }
     //ignore otherwise
 });
