@@ -8,6 +8,24 @@ var fs      = require("fs");
 var hostname = "192.168.0.14";
 var port     = 3000;
 
+var users = {
+    //empty object
+    
+    add_user: function(id, name, colour) {
+        this[id] = new User(name, colour);
+        
+        log("[notification] a new user created: \n    id: " + id + "\n    name: " + name + "\n    colour: " + colour);
+    },
+    
+    get_user: function(id) {
+        return this[id];
+    },
+    
+    remove_user: function(id) {
+        delete this[id];
+    },
+};
+
 app.get('/', function(req, res){
     log("[notification] incoming connection from: " + (req.ip || req.headers['x-forwarded-for'] || req.connection.remoteAddress));
     
@@ -18,22 +36,38 @@ app.get('/', function(req, res){
 app.use(express.static(__dirname));
 
 io.on('connection', function(socket) {
-    //give the new person their colour
-    io.emit('colour', get_colour());
+    //login event
+    socket.on('login', function(name) {
+        var new_colour = get_colour();
+        
+        users.add_user(socket.id, name, new_colour);
+    
+        log("[notification] " + name + " has connected to the chat server from " + socket.handshake.address + "\n    socket_id: " + socket.id);
+        io.emit('colour', new_colour);
+        io.emit('notification', name + " has connected to this server. welcome!");
+    });
 
-    //notify everyone
-    io.emit('notification', "somebody has entered this chatroom.");
-
-    socket.on('chat message', function(msg){
+    socket.on('chat message', function(msg) {
         //processing
-        var message = JSON.parse(msg).content;
-        log("[message] " + message);
+        var message = JSON.parse(msg);
+        log("[message] " + message.name + ": " + message.content);
         io.emit('chat message', msg);
     });
     
     socket.on('disconnect', function() {
-        log("[notification] somebody has disconnected.");
-        io.emit('chat message', "somebody has disconnected.");
+        var user = users.get_user(socket.id);
+        
+        if (user) {
+            log("[notification] " + user.name + " has disconnected.");
+            io.emit('notification', user.name + " has disconnected.");
+            
+            chat_colours[user.colour] = true; //free up that precious colour!
+        } else {
+            log("[notification] " + socket.id + " has disconnected.");
+        }
+        //more processing after. you'd think we'd be done, but no
+        
+        users.remove_user(socket.id);
     });
 });
 
@@ -76,7 +110,7 @@ function get_date_time() {
     return year + "/" + month + "/" + day + " " + hour + ":" + min + ":" + sec;
 }
 
-/*------------------------------------------------------------------------------------------*/
+/* ------------------------------------------------------------------------------------------------------- */
 //the colour part of this
 //colours for the chat box
 var chat_colours = {
@@ -107,9 +141,17 @@ function get_colour() {
     
     var colour = colours[Math.floor(Math.random() * colours.length)];
     
-    log("[notification] colour chosen: " + colour);
+    //log("[notification] colour chosen: " + colour);
     
     chat_colours[colour] = false;
     
     return colour;
+}
+
+/* ------------------------------------------------------------------------------------------------------------ */
+//user type
+
+function User(name, colour) {
+    this.colour = colour;
+    this.name   = name;
 }

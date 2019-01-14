@@ -49,28 +49,60 @@ body {
     border-radius: 5px;
 }
 
+.notification {
+    position: relative;
+    display: block;
+    padding: 5px;
+    float: right;
+    width: 70%;
+    
+    color: darkslategray;
+    background-color: snow;
+    border: 1px solid darkslategray;
+    border-radius: 5px;
+    
+    /* i'll do the rest with Javascript */
+}
+
 form {
     display: block;
     margin: 0px;
     padding: 0px;
     border: 0px;
+    bottom: 0px;
+    left: 0px;
 }
 
 input {
+    position: relative;
     margin: 0px;
     border: 0px;
+    padding: 2px;
     background-color: snow;
-    border: 1px solid #000000;
+    border: 1px solid black;
     border-radius: 2px;
     
     display: inline;
     height: 1.5em;
-    width: 100%;
     
     font-family: "Oxygen", sans-serif;
     font-size: 12pt;
 }
 
+input:focus {
+
+}
+
 div#name, div#message {
     display: inline-block;
+}
+
+#login_panel {
+    position: absolute;
+    margin: 0px;
+    padding: 5px;
+    border: 1px solid darkslategray;
+    
+    color: darkslategray;
+    background-color: snow;
 }
