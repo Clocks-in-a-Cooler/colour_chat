@@ -30,6 +30,7 @@ var init = (function() {
             //do some notifications
             
             messages_panel.appendChild(create_notification(notif));
+            messages_panel.scrollTo(0, messages_panel.scrollHeight);
         }
     });
     
@@ -39,6 +40,7 @@ var init = (function() {
             var message = JSON.parse(msg);
             
             messages_panel.appendChild(create_message(message.name, message.content, message.colour));
+            messages_panel.scrollTo(0, messages_panel.scrollHeight);
         }
     });
     
