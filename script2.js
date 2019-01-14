@@ -92,9 +92,12 @@ var init = (function() {
         var width    = height / 2;
         var x_offset = (window.innerWidth - width) / 2 - 1; //leave a pixel for the border
         
-        main_panel.style.top    = "0px"; main_panel.style.left = x_offset + "px";
-        main_panel.style.height = height - 2 + "px";
-        main_panel.style.width  = width + "px";
+        //main panel first
+        main_panel.style.top    = "0px";
+        main_panel.style.left   = (window.innerWidth * 0.3 - 1) + "px";
+        var main_panel_width    = window.innerWidth * 0.4 -2;
+        main_panel.style.height = (window.innerHeight - 3) + "px"; //border on the top and bottom
+        main_panel.style.width  = (main_panel_width) + "px";
         
         message_form.style.width = main_panel.offsetWidth - 2 + "px";
         
