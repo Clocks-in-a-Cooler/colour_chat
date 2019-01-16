@@ -89,6 +89,10 @@ input {
     font-size: 12pt;
 }
 
+input[type="submit"] {
+    /*margin: -5px; */
+}
+
 input:focus {
 
 }

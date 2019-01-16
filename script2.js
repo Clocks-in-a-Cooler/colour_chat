@@ -101,14 +101,15 @@ var init = (function() {
         main_panel.style.height = (window.innerHeight - 3) + "px"; //border on the top and bottom
         main_panel.style.width  = (main_panel_width) + "px";
         
-        message_form.style.width = main_panel.offsetWidth - 2 + "px";
+        message_form.style.width  = main_panel.offsetWidth - 2 + "px";
+        message_form.style.height = message_input.offsetHeight + 10 + "px";
         
-        message_submit.style.bottom = "5px";
-        message_submit.style.right  = "5px";
+        message_submit.style.top = "5px";
+        //message_submit.style.right  = "5px";
         
-        message_input.style.bottom = "5px";
-        message_input.style.left   = "5px";
-        message_input.style.width  = ((main_panel.offsetWidth - 2) - message_submit.offsetWidth - 10) + "px";
+        message_input.style.top   = "5px";
+        message_input.style.left  = "5px";
+        message_input.style.width = ((main_panel.offsetWidth - 2) - message_submit.offsetWidth - 10) + "px";
         
         messages_panel.style.width  = width - 2;
         messages_panel.style.height = main_panel.offsetHeight - message_form.offsetHeight - 2 + "px";
