@@ -1,0 +1,9 @@
+For HTTPS, put some certificates into this folder.
+
+You're going to need the following files:
+privKey.prm -- the private key
+newcert.pem -- the certificate
+
+You'll get a scary warning yelling at you that the certificates are not good, but good certificates cost money (just saying).
+
+If you're running colour_chat for private use, then just use openssl.exe (found on Sourceforge) to generate some certificates.
